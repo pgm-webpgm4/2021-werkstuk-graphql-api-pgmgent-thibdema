@@ -1,7 +1,6 @@
 /**
  * The Mutation Resolvers
  */
-
 const { ApolloError, AuthenticationError } = require('apollo-server');
 const pubsub = require('./pubsub');
 const bcrypt = require('bcrypt');
@@ -36,6 +35,7 @@ module.exports = {
     },
 
     addProduct: async (parent, { product }) => {
+
       if(context.userId === '') throw new AuthenticationError('Must authenticate!');
 
       // validate if the product already exists
@@ -52,6 +52,38 @@ module.exports = {
 
       // Returning new product
       return newProduct;
+    },
+
+    editProduct: async (parent, { id, product }) => {
+
+      if(context.userId === '') throw new AuthenticationError('Must authenticate!');
+
+      // validate if the product exists
+      const productExists = await Product.exists({ _id: id });
+      if(!productExists) throw new Error("Product doesn't exists.");
+
+      // Create new product
+      const editedProduct = await Product.update({
+        ...product
+      });
+
+      // Returning new product
+      return editedProduct;
+    },
+
+    deleteProduct: async (parent, { id }) => {
+
+      if(context.userId === '') throw new AuthenticationError('Must authenticate!');
+
+      // validate if the product exists
+      const productExists = await Product.exists({ _id: id });
+      if(!productExists) throw new Error("Product doesn't exists.");
+
+      // Create new product
+      await Product.deleteOne({ _id: id });
+
+      // Returning new product
+      return "Deleted product succesfully.";
     },
   }
 }

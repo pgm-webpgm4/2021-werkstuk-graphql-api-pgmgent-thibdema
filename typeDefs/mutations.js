@@ -9,5 +9,7 @@ module.exports = gql`
     addDummy(dummy: DummyInput):[Dummy]
     register(user: UserInput):User
     addProduct(product: ProductInput):Product
+    editProduct(id: ID,product: EditProductInput):Product
+    deleteProduct(id:ID):String
   }
 `;

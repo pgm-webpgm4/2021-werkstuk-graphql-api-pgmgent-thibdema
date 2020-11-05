@@ -48,9 +48,9 @@ const startServer = () => {
       introspection: true,
       playground: true,
       context: (({ req }) => {
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
         try {
+          const authHeader = req.headers['authorization'];
+          const token = authHeader && authHeader.split(' ')[1];
           const decodedToken = jwt.verify(token, process.env.TOKEN_SALT);
           return decodedToken && decodedToken.userId ? { userId: decodedToken.userId } : { userId: '' }
         } catch {

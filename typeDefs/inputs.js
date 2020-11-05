@@ -35,4 +35,16 @@ module.exports = gql`
     audience: Audience
     type: Producttype
   }
+
+  input EditProductInput {
+    title: String
+    description: String
+    price: Int
+    images: [ImageInput]
+    created_At: Date
+    color: [String]
+    sizes: [SizeQuantityInputs]
+    audience: Audience
+    type: Producttype
+  }
 `;
