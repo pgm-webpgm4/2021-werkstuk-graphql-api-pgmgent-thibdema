@@ -8,5 +8,6 @@ module.exports = gql`
   type Mutation {
     addDummy(dummy: DummyInput):[Dummy]
     register(user: UserInput):User
+    addProduct(product: ProductInput):Product
   }
 `;

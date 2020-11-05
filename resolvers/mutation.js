@@ -6,7 +6,7 @@ const { ApolloError, AuthenticationError } = require('apollo-server');
 const pubsub = require('./pubsub');
 const bcrypt = require('bcrypt');
 
-const { User } = require('../mongo/models');
+const { User, Product } = require('../mongo/models');
 
 module.exports = {
   Mutation: {
@@ -33,6 +33,25 @@ module.exports = {
 
       // return the user
       return newUser;
-    }
+    },
+
+    addProduct: async (parent, { product }) => {
+      if(context.userId === '') throw new AuthenticationError('Must authenticate!');
+
+      // validate if the product already exists
+      const productExists = await Product.exists({ product });
+      if(productExists) throw new Error('Product already exists.');
+
+      // Create new product
+      const newProduct = await Product.create({
+        ...product
+      });
+
+      // Added subscription
+      pubsub.publish('PRODUCT_ADDED', { productAdded: newProduct });
+
+      // Returning new product
+      return newProduct;
+    },
   }
 }

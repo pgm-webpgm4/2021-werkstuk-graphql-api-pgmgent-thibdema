@@ -68,11 +68,12 @@ module.exports = gql`
   type Image {
     url: String!
     alt: String
-    type: Imagetype
+    # type: Imagetype
   }
 
-  type Category {
-    category: String!
+  type SizeQuantity {
+    size: Size!
+    quantity: Int!
   }
 
   type Product {
@@ -81,13 +82,11 @@ module.exports = gql`
     description: String!
     price: Int!
     images: [Image]!
-    categories: [Category]!
     created_At: Date!
     color: [String]!
-    sizes: [Size]!
+    sizes: [SizeQuantity]!
     audience: Audience!
     type: Producttype!
-    quantity: Int!
   }
 
   type AuthData {

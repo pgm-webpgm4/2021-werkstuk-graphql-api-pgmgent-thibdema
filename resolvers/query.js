@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { AuthenticationError } = require('apollo-server');
 
-const { User } = require('../mongo/models.js');
+const { User, Product } = require('../mongo/models.js');
 
 module.exports = {
   Query: {
@@ -38,6 +38,22 @@ module.exports = {
         userId: foundUser.id,
         token
       }
+    },
+
+    getCategoryProducts: (parent, {category}, context) => {
+      return Product.find({ type: category}).exec();
+    },
+
+    getAudienceProducts: (parent, {audience}, context) => {
+      return Product.find({ audience: audience}).exec();
+    },
+
+    getProduct: (parent, {id}, context) => {
+      return Product.findById(id).exec();
+    },
+
+    getAllProducts: (parent, params, context) => {
+      return Product.find();
     },
 
     users: (parent, params, context) => {
