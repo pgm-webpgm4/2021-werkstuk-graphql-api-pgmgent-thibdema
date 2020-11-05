@@ -8,4 +8,4 @@ module.exports = gql`
   type Subscription {
     dummyAdded: Dummy
   }
-`
+`;

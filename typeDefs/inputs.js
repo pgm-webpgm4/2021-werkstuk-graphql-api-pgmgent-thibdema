@@ -8,4 +8,9 @@ module.exports = gql`
   input DummyInput {
     id: ID
   }
-`
+
+  input UserInput {
+    email: String
+    password: String
+  }
+`;
