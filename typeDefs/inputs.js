@@ -27,7 +27,7 @@ module.exports = gql`
   input ProductInput {
     title: String!
     description: String!
-    price: Int
+    price: Float
     images: [ImageInput]
     created_At: Date
     color: [String]!

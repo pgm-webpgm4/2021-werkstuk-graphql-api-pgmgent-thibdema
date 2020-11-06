@@ -80,7 +80,7 @@ module.exports = gql`
     id: ID!
     title: String!
     description: String!
-    price: Int!
+    price: Float!
     images: [Image]!
     created_At: Date!
     color: [String]!
