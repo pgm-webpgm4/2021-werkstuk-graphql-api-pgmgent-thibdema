@@ -54,7 +54,7 @@ module.exports = gql`
   }
 
   enum Producttype {
-    Hat,
+    Hats,
     Shoes,
     Bags,
     Shirts,
@@ -92,6 +92,7 @@ module.exports = gql`
   type AuthData {
     userId: ID
     token: String
+    admin: Boolean
   }
 
   type User {

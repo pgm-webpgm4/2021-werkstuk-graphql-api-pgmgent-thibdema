@@ -36,8 +36,9 @@ module.exports = {
       // return the auth data
       return {
         userId: foundUser.id,
-        token
-      }
+        token,
+        admin: !!foundUser.admin
+      };
     },
 
     getCategoryProducts: (parent, {category}, context) => {
@@ -64,6 +65,15 @@ module.exports = {
     user: (parent, { id }, context) => {
       if(context.userId === '') throw new AuthenticationError('Must authenticate!');
       else return User.findOne({ _id: id });
+    },
+
+    checkAdmin: (parent, { id }, context) => {
+      // if(context.userId === '') throw new AuthenticationError('Must authenticate!');
+      if(context.userId === '') {
+        return {admin: false}
+      }
+      const userData = User.findOne({ _id: id });
+      return userData;
     },
   },
 }

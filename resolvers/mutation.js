@@ -34,8 +34,7 @@ module.exports = {
       return newUser;
     },
 
-    addProduct: async (parent, { product }) => {
-
+    addProduct: async (parent, { product }, context) => {
       if(context.userId === '') throw new AuthenticationError('Must authenticate!');
 
       // validate if the product already exists
@@ -46,6 +45,8 @@ module.exports = {
       const newProduct = await Product.create({
         ...product
       });
+
+      console.log(newProduct);
 
       // Added subscription
       pubsub.publish('PRODUCT_ADDED', { productAdded: newProduct });
