@@ -89,6 +89,11 @@ module.exports = gql`
     type: Producttype!
   }
 
+  type Token {
+    token: String
+    id: ID
+  }
+
   type AuthData {
     userId: ID
     token: String

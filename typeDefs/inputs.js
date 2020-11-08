@@ -9,6 +9,11 @@ module.exports = gql`
     id: ID
   }
 
+  input TokenInput {
+    token: String
+    id: ID
+  }
+
   input UserInput {
     email: String
     password: String

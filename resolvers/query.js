@@ -41,6 +41,24 @@ module.exports = {
       };
     },
 
+    renewToken: async (parent, {token, id}, context) => {
+      if(context.userId === '') throw new AuthenticationError('Must authenticate!');
+
+      const foundUser = await User.findOne({ userId: id });
+
+      // create the webtoken
+      const newtoken = jwt.sign(
+        { userId: foundUser._id, email: foundUser.email },
+        process.env.TOKEN_SALT,
+        { expiresIn: '1h' }
+      );
+
+      return {
+        token: newtoken,
+        id: foundUser._id
+      };
+    },
+
     getCategoryProducts: (parent, {category}, context) => {
       return Product.find({ type: category}).exec();
     },
