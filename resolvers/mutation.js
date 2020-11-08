@@ -46,8 +46,6 @@ module.exports = {
         ...product
       });
 
-      console.log(newProduct);
-
       // Added subscription
       pubsub.publish('PRODUCT_ADDED', { productAdded: newProduct });
 

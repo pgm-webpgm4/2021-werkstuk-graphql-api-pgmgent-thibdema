@@ -50,6 +50,7 @@ module.exports = {
     },
 
     getProduct: (parent, {id}, context) => {
+      console.log(id)
       return Product.findById(id).exec();
     },
 
