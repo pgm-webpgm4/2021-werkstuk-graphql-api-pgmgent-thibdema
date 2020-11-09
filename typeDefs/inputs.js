@@ -19,6 +19,11 @@ module.exports = gql`
     password: String
   }
 
+  input FilterInput {
+    audience: String
+    category: String
+  }
+
   input ImageInput {
     url: String!
     alt: String

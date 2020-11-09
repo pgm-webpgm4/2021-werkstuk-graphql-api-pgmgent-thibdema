@@ -10,7 +10,7 @@ module.exports = gql`
     getCategoryProducts(category:String!):[Product]
     getAudienceProducts(audience:String!):[Product]
     getProduct(id:ID!):Product
-    getAllProducts:[Product]
+    getAllProducts(filters: FilterInput):[Product]
     login(user: UserInput):AuthData
     users:[User]
     user(id:ID):User

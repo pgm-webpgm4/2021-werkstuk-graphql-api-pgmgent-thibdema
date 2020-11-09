@@ -68,12 +68,14 @@ module.exports = {
     },
 
     getProduct: (parent, {id}, context) => {
-      console.log(id)
       return Product.findById(id).exec();
     },
 
-    getAllProducts: (parent, params, context) => {
-      return Product.find();
+    getAllProducts: (parent, {filters}) => {
+      if(filters.audience == 'All' && filters.category == 'All') return Product.find();
+      if(filters.audience == 'All') return Product.find({type: filters.category});
+      if(filters.category == 'All') return Product.find({audience: filters.audience});
+      return Product.find({type: filters.category, audience: filters.audience});
     },
 
     users: (parent, params, context) => {
