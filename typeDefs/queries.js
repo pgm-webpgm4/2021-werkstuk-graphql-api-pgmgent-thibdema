@@ -11,6 +11,7 @@ module.exports = gql`
     getAudienceProducts(audience:String!):[Product]
     getProduct(id:ID!):Product
     getAllProducts(filters: FilterInput):[Product]
+    search(search: String):[Product]
     login(user: UserInput):AuthData
     users:[User]
     user(id:ID):User

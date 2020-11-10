@@ -71,6 +71,18 @@ module.exports = {
       return Product.findById(id).exec();
     },
 
+    search: (parent, {search}, context) => {
+      if(!!search) {
+        const searchQuery = {
+          $or: [
+            { title: { $regex: search, $options: 'i' } },
+            { description: { $regex: search, $options: 'i' } }
+          ]
+        };
+        return Product.find(searchQuery);
+      } else return [];
+    },
+
     getAllProducts: (parent, {filters}) => {
       if(filters.audience == 'All' && filters.category == 'All') return Product.find();
       if(filters.audience == 'All') return Product.find({type: filters.category});
