@@ -52,7 +52,7 @@ const startServer = () => {
           const authHeader = req.headers['authorization'];
           const token = authHeader && authHeader.split(' ')[1];
           const decodedToken = jwt.verify(token, process.env.TOKEN_SALT);
-          return decodedToken && decodedToken.userId ? { userId: decodedToken.userId } : { userId: '' }
+          return decodedToken && decodedToken.userId ? { userId: decodedToken.userId, ...decodedToken } : { userId: '' }
         } catch {
           return { userId: '' }
         }

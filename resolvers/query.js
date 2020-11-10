@@ -28,7 +28,7 @@ module.exports = {
 
       // create the webtoken
       const token = jwt.sign(
-        { userId: foundUser._id, email: foundUser.email },
+        { userId: foundUser._id, email: foundUser.email, admin: !!foundUser.admin },
         process.env.TOKEN_SALT,
         { expiresIn: '1h' }
       );
@@ -92,19 +92,18 @@ module.exports = {
 
     users: (parent, params, context) => {
       if(context.userId === '') throw new AuthenticationError('Must authenticate!');
+      if(!context.admin) throw new AuthenticationError('NOT AUTHORIZED');
       else return User.find();
     },
 
     user: (parent, { id }, context) => {
       if(context.userId === '') throw new AuthenticationError('Must authenticate!');
+      if(!context.admin) throw new AuthenticationError('NOT AUTHORIZED');
       else return User.findOne({ _id: id });
     },
 
     checkAdmin: (parent, { id }, context) => {
-      // if(context.userId === '') throw new AuthenticationError('Must authenticate!');
-      if(context.userId === '') {
-        return {admin: false}
-      }
+      if(!context.admin) throw new AuthenticationError('NOT AUTHORIZED');
       const userData = User.findOne({ _id: id });
       return userData;
     },

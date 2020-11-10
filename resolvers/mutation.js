@@ -36,6 +36,7 @@ module.exports = {
 
     addProduct: async (parent, { product }, context) => {
       if(context.userId === '') throw new AuthenticationError('Must authenticate!');
+      if(!context.admin) throw new AuthenticationError('NOT AUTHORIZED');
 
       // validate if the product already exists
       const productExists = await Product.exists({ product });
@@ -53,9 +54,10 @@ module.exports = {
       return newProduct;
     },
 
-    editProduct: async (parent, { id, product }) => {
+    editProduct: async (parent, { id, product }, context) => {
 
       if(context.userId === '') throw new AuthenticationError('Must authenticate!');
+      if(!context.admin) throw new AuthenticationError('NOT AUTHORIZED');
 
       // validate if the product exists
       const productExists = await Product.exists({ _id: id });
@@ -70,9 +72,10 @@ module.exports = {
       return editedProduct;
     },
 
-    deleteProduct: async (parent, { id }) => {
+    deleteProduct: async (parent, { id }, context) => {
 
       if(context.userId === '') throw new AuthenticationError('Must authenticate!');
+      if(!context.admin) throw new AuthenticationError('NOT AUTHORIZED');
 
       // validate if the product exists
       const productExists = await Product.exists({ _id: id });
