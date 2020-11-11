@@ -60,14 +60,16 @@ module.exports = {
       if(!context.admin) throw new AuthenticationError('NOT AUTHORIZED');
 
       // validate if the product exists
-      const productExists = await Product.exists({ _id: product.id });
-      if(!productExists) throw new Error("Product doesn't exists.");
+      // const productExists = await Product.exists({ _id: product.id });
+      // if(!productExists) throw new Error("Product doesn't exists.");
+
+      console.log(product.id)
 
       // Edit product
-      const editedProduct = await Product.findByIdAndUpdate(product.id, product);
+      const editedProduct = await Product.updateOne({ _id: product.id}, {...product});
 
       // Returning new product
-      return editedProduct;
+      return product;
     },
 
     deleteProduct: async (parent, { id }, context) => {

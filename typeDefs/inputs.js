@@ -35,6 +35,7 @@ module.exports = gql`
   }
 
   input ProductInput {
+    id: ID
     title: String!
     description: String!
     price: Float
