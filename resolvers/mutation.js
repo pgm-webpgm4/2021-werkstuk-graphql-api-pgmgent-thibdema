@@ -54,19 +54,17 @@ module.exports = {
       return newProduct;
     },
 
-    editProduct: async (parent, { id, product }, context) => {
+    editProduct: async (parent, { product }, context) => {
 
       if(context.userId === '') throw new AuthenticationError('Must authenticate!');
       if(!context.admin) throw new AuthenticationError('NOT AUTHORIZED');
 
       // validate if the product exists
-      const productExists = await Product.exists({ _id: id });
+      const productExists = await Product.exists({ _id: product.id });
       if(!productExists) throw new Error("Product doesn't exists.");
 
-      // Create new product
-      const editedProduct = await Product.update({
-        ...product
-      });
+      // Edit product
+      const editedProduct = await Product.findByIdAndUpdate(product.id, product);
 
       // Returning new product
       return editedProduct;
@@ -81,11 +79,11 @@ module.exports = {
       const productExists = await Product.exists({ _id: id });
       if(!productExists) throw new Error("Product doesn't exists.");
 
-      // Create new product
-      await Product.deleteOne({ _id: id });
+      // Edit product
+      const deleteProduct = await Product.findByIdAndDelete(id);
 
       // Returning new product
-      return "Deleted product succesfully.";
+      return `Deleted '${(!!deleteProduct.title) ? deleteProduct.title : 'product'}' succesfully.`;
     },
   }
 }
